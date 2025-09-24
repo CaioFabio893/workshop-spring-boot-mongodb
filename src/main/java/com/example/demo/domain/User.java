@@ -1,9 +1,12 @@
 package com.example.demo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
@@ -15,6 +18,9 @@ public class User  implements Serializable{
 	private String id;
 	private String name;
 	private String email;
+	
+	@DBRef(lazy = true)
+	private List<Post> post = new ArrayList<>();
 	
 	public User() {}
 
@@ -49,6 +55,15 @@ public class User  implements Serializable{
 		this.email = email;
 	}
 
+	public List<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(List<Post> post) {
+		this.post = post;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -65,6 +80,7 @@ public class User  implements Serializable{
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
+
 	
 	
 
